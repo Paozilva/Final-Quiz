@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz de JavaScript</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #180101;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px;
+    }
+    #quiz {
+      background: white;
+      padding:50px;
+      max-width: 600px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    h2 {
+      margin-bottom: 20px;
+    }
+    .opcao {
+      margin: 10px 0;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      background: #25bff8;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    #resultado {
+      font-size: 30px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz">
+    <h2 id="pergunta"></h2>
+    <div id="opcoes"></div>
+    <button onclick="proximaPergunta()">Próxima</button>
+    <p id="resultado"></p>
+  </div>
+
+  <script>
+    const perguntas = [
+    
+  {
+    texto: "Que tipo de linguagem é JavaScript?",
+    opcoes: ["Compilada", "Interpretada", "Assembly", "Binária"],
+    correta: "Interpretada"
+  },
+  {
+    texto: "Qual desses NÃO é um tipo de dado primitivo?",
+    opcoes: ["String", "Number", "Boolean", "Function"],
+    correta: "Function"
+  },
+  {
+    texto: "Como declarar uma variável com escopo de bloco?",
+    opcoes: ["var", "let", "const", "let e const"],
+    correta: "let e const"
+  },
+  {
+    texto: "Qual o resultado de typeof null?",
+    opcoes: ["'object'", "'null'", "'undefined'", "'boolean'"],
+    correta: "'object'"
+  },
+  {
+    texto: "Qual método converte JSON em objeto?",
+    opcoes: ["JSON.stringify()", "JSON.toObject()", "JSON.parse()", "JSON.objectify()"],
+    correta: "JSON.parse()"
+  },
+  {
+    texto: "Qual palavra-chave define uma função?",
+    opcoes: ["def", "function", "fn", "func"],
+    correta: "function"
+  },
+  {
+    texto: "Qual o valor de '2' + 2?",
+    opcoes: ["4", "'4'", "'22'", "NaN"],
+    correta: "'22'"
+  },
+  {
+    texto: "Qual é o operador de comparação estrita?",
+    opcoes: ["==", "!=", "===", "!==="],
+    correta: "==="
+  },
+  {
+    texto: "O que faz setTimeout?",
+    opcoes: ["Repete código", "Atrasa execução", "Interrompe execução", "Executa imediatamente"],
+    correta: "Atrasa execução"
+  },
+  {
+    texto: "Qual estrutura é usada para tratar erros?",
+    opcoes: ["try-catch", "if-else", "switch", "throw"],
+    correta: "try-catch"
+  },
+  {
+    texto: "O que retorna uma função sem return?",
+    opcoes: ["null", "0", "undefined", "false"],
+    correta: "undefined"
+  },
+  {
+    texto: "Qual símbolo faz comentário de uma linha?",
+    opcoes: ["/* */", "<!-- -->", "//", "#"],
+    correta: "//"
+  },
+  {
+    texto: "Qual o valor booleano de uma string vazia?",
+    opcoes: ["true", "false", "null", "undefined"],
+    correta: "false"
+  },
+  {
+    texto: "Qual método adiciona um item ao fim de um array?",
+    opcoes: ["push()", "pop()", "shift()", "unshift()"],
+    correta: "push()"
+  },
+  {
+    texto: "Qual método remove o primeiro item de um array?",
+    opcoes: ["shift()", "pop()", "slice()", "splice()"],
+    correta: "shift()"
+  },
+  {
+    texto: "Como acessar o segundo item de um array?",
+    opcoes: ["array(2)", "array[2]", "array[1]", "array{1}"],
+    correta: "array[1]"
+  },
+  {
+    texto: "O que significa NaN?",
+    opcoes: ["Não a número", "Não é um número", "Nome alternativo", "Novo array numérico"],
+    correta: "Não é um número"
+  },
+  {
+    texto: "Qual método converte um objeto em string JSON?",
+    opcoes: ["JSON.stringify()", "JSON.toString()", "object.toJson()", "stringifyJSON()"],
+    correta: "JSON.stringify()"
+  },
+  {
+    texto: "O que é uma função arrow (flecha)?",
+    opcoes: ["Função com flechas", "Nova sintaxe compacta", "Uma classe", "Uma promessa"],
+    correta: "Nova sintaxe compacta"
+  },
+  {
+    texto: "Como se cria uma arrow function?",
+    opcoes: ["() => {}", "function => {}", "function() {}", "(function) => {}"],
+    correta: "() => {}"
+  },
+  {
+    texto: "O que é uma Promise?",
+    opcoes: ["Um laço", "Um tipo de variável", "Maneira de lidar com assíncronos", "Função repetida"],
+    correta: "Maneira de lidar com assíncronos"
+  },
+  {
+    texto: "Qual método executa função em cada item do array?",
+    opcoes: ["map()", "filter()", "reduce()", "every()"],
+    correta: "map()"
+  },
+  {
+    texto: "Qual desses filtra elementos de um array?",
+    opcoes: ["map()", "reduce()", "filter()", "concat()"],
+    correta: "filter()"
+  },
+  {
+    texto: "Qual palavra interrompe um laço?",
+    opcoes: ["stop", "halt", "break", "exit"],
+    correta: "break"
+  },
+  {
+    texto: "Qual método junta todos os itens de um array em string?",
+    opcoes: ["join()", "concat()", "merge()", "flat()"],
+    correta: "join()"
+  },
+  {
+    texto: "O que faz event.preventDefault()?",
+    opcoes: ["Cancela o evento", "Reinicia o evento", "Impede que ocorra", "Evita comportamento padrão"],
+    correta: "Evita comportamento padrão"
+  },
+  {
+    texto: "O que faz addEventListener()?",
+    opcoes: ["Cria eventos", "Remove eventos", "Escuta eventos", "Filtra eventos"],
+    correta: "Escuta eventos"
+  },
+  {
+    texto: "O que é this dentro de um método?",
+    opcoes: ["Objeto global", "Objeto atual", "undefined", "Função pai"],
+    correta: "Objeto atual"
+  },
+  {
+    texto: "Qual palavra-chave define uma classe?",
+    opcoes: ["function", "object", "define", "class"],
+    correta: "class"
+  },
+  {
+    texto: "Qual operador lógico representa 'e' (AND)?",
+    opcoes: ["||", "&&", "!", "==="],
+    correta: "&&"
+  },
+  {
+    texto: "Qual desses navegadores NÃO suportava JS nas primeiras versões?",
+    opcoes: ["Chrome", "Netscape", "Internet Explorer", "Lynx"],
+    correta: "Lynx"
+  }
+    ];
+  </script>
+
+  <script>
+    let indice = 0;
+    let pontos = 0;
+
+    function mostrarPergunta() {
+      const pergunta = perguntas[indice];
+      document.getElementById("pergunta").innerText = `Pergunta ${indice + 1}: ${pergunta.texto}`;
+
+      const opcoesDiv = document.getElementById("opcoes");
+      opcoesDiv.innerHTML = "";
+
+      pergunta.opcoes.forEach(opcao => {
+        const label = document.createElement("label");
+        label.className = "opcao";
+
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "opcao";
+        input.value = opcao;
+
+        label.appendChild(input);
+        label.appendChild(document.createTextNode(opcao));
+        opcoesDiv.appendChild(label);
+        opcoesDiv.appendChild(document.createElement("br"));
+      });
+    }
+
+    function proximaPergunta() {
+      const selecionado = document.querySelector("input[name='opcao']:checked");
+
+      if (!selecionado) {
+        alert("Por favor, selecione uma resposta.");
+        return;
+      }
+
+      if (selecionado.value === perguntas[indice].correta) {
+        pontos++;
+      }
+
+      indice++;
+
+      if (indice < perguntas.length) {
+        mostrarPergunta();
+      } else {
+        document.getElementById("quiz").innerHTML = `<h2>Quiz finalizado!</h2><p id="resultado">Você acertou ${pontos} de ${perguntas.length} perguntas.</p>`;
+      }
+    }
+
+    // Cargar preguntas al iniciar
+    window.onload = () => {
+      mostrarPergunta();
+    };
+  </script>
+</body>
+</html>
